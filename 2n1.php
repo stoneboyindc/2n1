@@ -1,4 +1,5 @@
 <?php
+header('Content-type: text/html; charset=UTF-8');
 
 function get_site_html($site_url) 
 {
@@ -27,8 +28,65 @@ function stripFirstLine($text)
   return substr( $text, strpos($text, "\n")+1 );
 }
 
-$html = "";
+function outputTable($attrList)
+{
+$variable = <<<XYZ
+<table class="board-list10">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+XYZ;
+echo $variable;
+
+foreach($attrList as $a => $b) {
+echo "<tr>";
+echo "<td>".$a."</td>";
+echo "<td>".$b."</td>";
+echo "</tr>";
+}
+$end = <<<XYZ
+  </tbody>
+</table>
+XYZ;
+echo $end;
+}
+
+$style = <<<XYZ
+<style type='text/css'>
+table.board-list10{width:100%;border-top:2px solid #019b45;text-align:center}
+table.board-list10 thead th{padding:20px 5px;border-bottom:1px solid #ccc;font-weight:bold;background:url("/common/bulImg/bul_Table3Line.gif") no-repeat left center;}
+table.board-list10 tbody td,
+table.board-list10 tbody th{padding:20px 12px;background:url("/common/bulImg/bul_Table3Line.gif") no-repeat left center;border-bottom:1px solid #ccc;}
+table.board-list10.layout{border-collapse:collapse;width:100%;}
+table.board-list10.display{margin:1em 0;}
+table.board-list10.display th,
+table.board-list10.display td{padding:20px 5px}
+table.board-list10.responsive-table{}
+table.board-list10 .actions{color:#fff;background:#019b45}
+table.board-list10 tbody td{text-overflow:ellipsis;white-space:nowrap;word-wrap:normal;max-width:220px;overflow:hidden;}
+
+table.board-list10 tbody th.first{border-left:0;}
+table.board-list10 tbody td:first-child,
+table.board-list10 thead th:first-child,
+table.board-list10 tbody th:first-child{background:none}
+</style>
+XYZ;
+echo $style;
+
 $url = "http://asp1.krx.co.kr/servlet/krx.asp.XMLSiseEng?code=031980";
+$lang = $_REQUEST['lang'];
+if (empty($lang)) {
+    
+} else {
+   $url = "http://asp1.krx.co.kr/servlet/krx.asp.XMLSise?code=031980";
+}
+
+$html = "";
+
 //$xml = simplexml_load_file($url);
 $xml = get_site_html($url);
 // $xmlstr = preg_replace('/^.+\n/', '', $xml);
@@ -36,53 +94,22 @@ $xmlstr = stripFirstLine($xml);
 
 $result = new SimpleXMLElement($xmlstr);
 //print_r($result[0]);
+/*
 foreach($result->attributes() as $a => $b) {
     echo $a,'="',$b,"\"\n";
 }
-
+*/
 //print_r($result->TBL_DailyStock);
 //print_r($result->TBL_DailyStock->DailyStock[0]);
-
-foreach($result->TBL_DailyStock->DailyStock[0]->attributes() as $a => $b) {
-    echo $a,'="',$b,"\"\n";
-}
-
-
-foreach($result->TBL_AskPrice->AskPrice[0]->attributes() as $a => $b) {
-    echo $a,'="',$b,"\"\n";
-}
-
-foreach($result->TBL_StockInfo->attributes() as $a => $b) {
-    echo $a,'="',$b,"\"\n";
-}
-
-foreach($result->TBL_Hoga->attributes() as $a => $b) {
-    echo $a,'="',$b,"\"\n";
-}
-
+?>
+<?php
+outputTable($result->TBL_StockInfo->attributes());
+outputTable($result->TBL_Hoga->attributes());
+outputTable($result->stockInfo->attributes());
+/*
 foreach($result->TBL_TimeConclude->TBL_TimeConclude[0]->attributes() as $a => $b) {
     echo $a,'="',$b,"\"\n";
 }
-
-foreach($result->stockInfo->attributes() as $a => $b) {
-    echo $a,'="',$b,"\"\n";
-}
-
-//echo $xml;
-/*
-for($i = 0; $i < 5; $i++){
-
-    $image = $xml->channel->item[$i]->children('media', True)->content->attributes();
-    $title = $xml->channel->item[$i]->title;
-    $link = $xml->channel->item[$i]->link;
-    $description = $xml->channel->item[$i]->description;
-    $pubDate = $xml->channel->item[$i]->pubDate;
-
-    $html .= "<img src='$image' alt='$title'>";
-    $html .= "<a href='$link'><h3>$title</h3></a>";
-    $html .= "$description";
-    $html .= "<br />$pubDate<hr />";
-}
 */
-echo $html;
+
 ?>

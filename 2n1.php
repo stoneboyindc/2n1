@@ -57,10 +57,13 @@ echo $end;
 
 $style = <<<XYZ
 <style type='text/css'>
+html, body, article, aside, details, figcaption, figure, header, hgroup, menu, nav, section, header, table, tbody, tfoot, thead, tr, th, td, article, aside, audio, video
+{margin:0;height:100%;padding:0;border:0;outline:0;font-size:100%;font:inherit;font-family:'NanumSquare','나눔스퀘어','Nanum Square Light',Oswald,'Nanum Gothic';color:#555;vertical-align:middle;background:transparent;box-sizing:border-box;-o-box-sizing:border-box;-ms-box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box}
+
 table.board-list10{width:100%;border-top:2px solid #019b45;text-align:center}
 table.board-list10 thead th{padding:20px 5px;border-bottom:1px solid #ccc;font-weight:bold;background:url("/common/bulImg/bul_Table3Line.gif") no-repeat left center;}
 table.board-list10 tbody td,
-table.board-list10 tbody th{padding:20px 12px;background:url("/common/bulImg/bul_Table3Line.gif") no-repeat left center;border-bottom:1px solid #ccc;}
+table.board-list10 tbody th{padding:20px 12px;background:url("bul_Table3Line.gif") no-repeat left center;border-bottom:1px solid #ccc;}
 table.board-list10.layout{border-collapse:collapse;width:100%;}
 table.board-list10.display{margin:1em 0;}
 table.board-list10.display th,
@@ -94,6 +97,11 @@ $xmlstr = stripFirstLine($xml);
 
 $result = new SimpleXMLElement($xmlstr);
 //print_r($result[0]);
+echo "<h2>Query Time</h2>";
+//outputTable($result->attributes());
+foreach($result->attributes() as $a => $b) {
+    echo $b."<br>";
+}
 /*
 foreach($result->attributes() as $a => $b) {
     echo $a,'="',$b,"\"\n";
@@ -103,8 +111,11 @@ foreach($result->attributes() as $a => $b) {
 //print_r($result->TBL_DailyStock->DailyStock[0]);
 ?>
 <?php
+echo "<h2>TBL_StockInfo</h2>";
 outputTable($result->TBL_StockInfo->attributes());
+echo "<h2>TBL_Hoga</h2>";
 outputTable($result->TBL_Hoga->attributes());
+echo "<h2>StockInfo</h2>";
 outputTable($result->stockInfo->attributes());
 /*
 foreach($result->TBL_TimeConclude->TBL_TimeConclude[0]->attributes() as $a => $b) {

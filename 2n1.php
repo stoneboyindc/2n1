@@ -113,6 +113,10 @@ foreach($result->attributes() as $a => $b) {
 <?php
 echo "<h2>TBL_StockInfo</h2>";
 outputTable($result->TBL_StockInfo->attributes());
+echo "<h2>TBL_AskPrice</h2>";
+for ($i = 0; $i < 5; $i++) {
+  outputTable($result->TBL_AskPrice->AskPrice[$i]->attributes());
+}
 echo "<h2>TBL_Hoga</h2>";
 outputTable($result->TBL_Hoga->attributes());
 echo "<h2>StockInfo</h2>";

@@ -125,18 +125,6 @@ html, body, article, aside, details, figcaption, figure, header, hgroup, menu, n
 XYZ;
 echo $style;
 
-$headUrl = "http://asp1.krx.co.kr/servlet/krx.asp.XMLSise?code=031980";
-$headXml = get_site_html($headUrl);
-$xmlstr = stripFirstLine($headXml);
-$headResult = new SimpleXMLElement($xmlstr);
-$hashMap = array();
-foreach($headResult->attributes() as $a => $b) {
-  $hashMap[$a]=''.$b.'';
-}
-buildMap($headResult->TBL_StockInfo->attributes(), $hashMap);
-buildMap($headResult->TBL_Hoga->attributes(), $hashMap);
-buildMap($headResult->stockInfo->attributes(), $hashMap);
-
 $url = "http://asp1.krx.co.kr/servlet/krx.asp.DisList4MainServlet?code=031980&gubun=K";
 $xml = get_site_html($url);
 $xmlstr = stripFirstLine($xml);
@@ -144,36 +132,17 @@ $xmlstr = stripFirstLine($xml);
 $result = new SimpleXMLElement($xmlstr);
 ?>
 <?php
-
+// Get Query Time
+$hashMap = array();
+foreach($result->attributes() as $a => $b) {
+  $hashMap[$a]=''.$b.'';
+}
+// Get info
 $volMap = array();
 for ($i = 0; $i < 10; $i++) {
   $volMap[$i] = array();
   buildMap($result->disInfo[$i]->attributes(), $volMap[$i]);
 }
-
-echo '<div class="Rtable Rtable--4cols">';
-echo '<div class="Rtable-cell value">현재가</div>';
-echo '<div class="Rtable-cell value"></div>';
-echo '<div class="Rtable-cell value">KOSPI</div>';
-echo '<div class="Rtable-cell value">KOSDAQ</div>';
-echo '<div class="Rtable-cell valueLarge">'.$hashMap["CurJuka"].'</div>';
-echo '<div class="Rtable-cell value">';
-echo '<div style="margin: 0px;" class="Rtable Rtable--2cols">';
-echo '<div class="Rtable-cell value">전일대비</div>';
-echo '<div class="Rtable-cell value">'.$hashMap["Debi"].'</div>';
-echo '<div class="Rtable-cell value">전일종가</div>';
-echo '<div class="Rtable-cell value">'.$hashMap["PrevJuka"].'</div>';
-echo '<div class="Rtable-cell value">거래량</div>';
-echo '<div class="Rtable-cell value">'.$hashMap["Volume"].'</div>';
-echo '</div>';
-echo '</div>';
-echo '<div class="Rtable-cell valueLarge">'.$hashMap["kospiJisu"].'</div>';
-echo '<div class="Rtable-cell valueLarge">'.$hashMap["kosdaqJisu"].'</div>';
-echo '<div class="Rtable-cell value"></div>';
-echo '<div class="Rtable-cell value"></div>';
-echo '<div class="Rtable-cell value">'.$hashMap["kospiDebi"].'</div>';
-echo '<div class="Rtable-cell value">'.$hashMap["kosdaqJisuDebi"].'</div>';
-echo '</div>';
 
 echo '<div style="margin: 0px;" class="Rtable Rtable--2cols">';
 echo '<div style="text-align:left" class="Rtable-cell">공시정보</div>';

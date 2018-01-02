@@ -35,6 +35,28 @@ function buildMap($attrList, &$map)
   }
 }
 
+function getPreviousClosePrice($text)
+{        
+  $tokStart = '<td class="rgt">';
+  $tokEnd = '<td class="rgt rm">';
+  $pieces = explode($tokStart, $text);
+  $pieces2 = explode($tokEnd, $pieces[4]);
+  $val = rtrim( $pieces2[0] );
+
+  return intval(str_replace(",", "", $val));
+}
+
+function getArrow($curJuka, $prevJuka  ) {
+  if ($curJuka > $prevJuka) {
+    $arrow = '<span style="color:#0433FF;">&#x25B2;</span>';
+  } elseif ($curJuka < $prevJuka) {
+    $arrow = '<span style="color:#FF2600;">&#x25BC;</span>';
+  } else {
+    $arrow = '';
+  }
+  return $arrow;
+}
+
 function outputOneRowA($hashMap, $leftName, $leftAttr, $rightName, $rightAttr)
 {
   echo '<div class="Rtable-cell20 label border">'.$leftName.'</div>';
@@ -99,6 +121,7 @@ html, body, article, aside, details, figcaption, figure, header, hgroup, menu, n
   color: #55555;
   background-color: #FFFFFF;
   font-size: 300%;
+  padding-bottom: 5px;
 }
 .label {
   color: #FFFFFF;
@@ -135,6 +158,13 @@ $hashMap = array();
 foreach($result->attributes() as $a => $b) {
   $hashMap[$a]=''.$b.'';
 }
+
+$urlKOSPI = "https://finance.google.com/finance/historical?q=KRX:KOSPI";
+$urlKOSDAQ = "http://finance.google.com/finance/historical?q=KOSDAQ:KOSDAQ";
+$respBody = get_site_html($urlKOSPI);
+$kospi = getPreviousClosePrice($respBody);
+$respBody = get_site_html($urlKOSDAQ);
+$kosdaq = getPreviousClosePrice($respBody);
 /*
 foreach($result->attributes() as $a => $b) {
     echo $a,'="',$b,"\"\n";
@@ -154,6 +184,15 @@ for ($i = 0; $i < 5; $i++) {
   buildMap($result->TBL_AskPrice->AskPrice[$i]->attributes(), $volMap[$i]);
 }
 
+$curJuka = $hashMap["CurJuka"];
+$prevJuka = $hashMap["PrevJuka"];
+if ($curJuka > $prevJuka) {
+  $arrow = '<span style="color:#0433FF;">&#x25B2;</span>';
+} elseif ($curJuka < $prevJuka) {
+  $arrow = '<span style="color:#FF2600;">&#x25BC;</span>';
+} else {
+  $arrow = '';
+}
 
 echo '<div class="Rtable Rtable--4cols">';
 echo '<div class="Rtable-cell value">현재가</div>';
@@ -164,19 +203,15 @@ echo '<div class="Rtable-cell valueLarge">'.$hashMap["CurJuka"].'</div>';
 echo '<div class="Rtable-cell value">';
 echo '<div style="margin: 0px;" class="Rtable Rtable--2cols">';
 echo '<div class="Rtable-cell value">전일대비</div>';
-echo '<div class="Rtable-cell value">'.$hashMap["Debi"].'</div>';
+echo '<div class="Rtable-cell value">'.getArrow($hashMap["CurJuka"],$hashMap["PrevJuka"]).$hashMap["Debi"].'</div>';
 echo '<div class="Rtable-cell value">전일종가</div>';
 echo '<div class="Rtable-cell value">'.$hashMap["PrevJuka"].'</div>';
 echo '<div class="Rtable-cell value">거래량</div>';
 echo '<div class="Rtable-cell value">'.$hashMap["Volume"].'</div>';
 echo '</div>';
 echo '</div>';
-echo '<div class="Rtable-cell valueLarge">'.$hashMap["kospiJisu"].'</div>';
-echo '<div class="Rtable-cell valueLarge">'.$hashMap["kosdaqJisu"].'</div>';
-echo '<div class="Rtable-cell value"></div>';
-echo '<div class="Rtable-cell value"></div>';
-echo '<div class="Rtable-cell value">'.$hashMap["kospiDebi"].'</div>';
-echo '<div class="Rtable-cell value">'.$hashMap["kosdaqJisuDebi"].'</div>';
+echo '<div class="Rtable-cell" style="border-left: 6px solid #FF2600;"><span class="valueLarge">'.$hashMap["kospiJisu"].'</span><br><span class="value">'.getArrow($hashMap["kospiJisu"],$kospi).$hashMap["kospiDebi"].'</div>';
+echo '<div class="Rtable-cell"><span class="valueLarge">'.$hashMap["kosdaqJisu"].'</span><br><span class="value">'.getArrow($hashMap["kosdaqJisu"],$kosdaq).$hashMap["kosdaqJisuDebi"].'</div>';
 echo '</div>';
 
 ?>

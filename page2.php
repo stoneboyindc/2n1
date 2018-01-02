@@ -68,6 +68,7 @@ function outputOneRowPage3($hashMap, $leftAttr, $midAttr, $rightAttr)
   echo '<div class="Rtable-cell20 value border">'.$hashMap[$rightAttr].'</div>';
 }
 
+/*
 function outputOneRowTitlePage2($leftAttr, $midAttr, $rightAttr)
 {
   echo '<div class="Rtable Rtable--3cols border">';
@@ -76,7 +77,7 @@ function outputOneRowTitlePage2($leftAttr, $midAttr, $rightAttr)
   echo '<div class="Rtable-cell label border">'.$rightAttr.'</div>';
   echo '</div>';
 }
-/*
+
 function outputOneRowValPage2($hashMap, $leftAttr, $midAttr, $rightAttr)
 {
   echo '<div class="Rtable Rtable--3cols border">';
@@ -86,6 +87,24 @@ function outputOneRowValPage2($hashMap, $leftAttr, $midAttr, $rightAttr)
   echo '</div>';
 }
 */
+
+function outputOneRowTitlePage2($label, 
+    $leftAttr1, $midAttr1, $rightAttr1,
+     $leftAttr2, $midAttr2, $rightAttr2,
+      $leftAttr3, $midAttr3, $rightAttr3)
+{
+  echo '<div class="Rtable-cell label border">'.$label.'</div>';
+  echo '<div class="Rtable-cell label2 border">'.$leftAttr1.'</div>';
+  echo '<div class="Rtable-cell label2 border">'.$midAttr1.'</div>';
+  echo '<div class="Rtable-cell label2 border">'.$rightAttr1.'</div>';
+  echo '<div class="Rtable-cell label2 border">'.$leftAttr2.'</div>';
+  echo '<div class="Rtable-cell label2 border">'.$midAttr2.'</div>';
+  echo '<div class="Rtable-cell label2 border">'.$rightAttr2.'</div>';
+  echo '<div class="Rtable-cell label2 border">'.$leftAttr3.'</div>';
+  echo '<div class="Rtable-cell label2 border">'.$midAttr3.'</div>';
+  echo '<div class="Rtable-cell label2 border">'.$rightAttr3.'</div>';
+}
+
 function outputOneRowValPage2($hashMap, $label, 
     $leftAttr1, $midAttr1, $rightAttr1,
      $leftAttr2, $midAttr2, $rightAttr2,
@@ -101,6 +120,20 @@ function outputOneRowValPage2($hashMap, $label,
   echo '<div class="Rtable-cell value border">'.$hashMap[$leftAttr3].'</div>';
   echo '<div class="Rtable-cell value border">'.$hashMap[$midAttr3].'</div>';
   echo '<div class="Rtable-cell value border">'.$hashMap[$rightAttr3].'</div>';
+}
+
+
+function output7ColTitlePage2($label, 
+    $leftAttr1, $midAttr1, $rightAttr1,
+     $leftAttr2, $midAttr2, $rightAttr2)
+{
+  echo '<div class="Rtable-cell label border">'.$label.'</div>';
+  echo '<div class="Rtable-cell label2 border">'.$leftAttr1.'</div>';
+  echo '<div class="Rtable-cell label2 border">'.$midAttr1.'</div>';
+  echo '<div class="Rtable-cell label2 border">'.$rightAttr1.'</div>';
+  echo '<div class="Rtable-cell label2 border">'.$leftAttr2.'</div>';
+  echo '<div class="Rtable-cell label2 border">'.$midAttr2.'</div>';
+  echo '<div class="Rtable-cell label2 border">'.$rightAttr2.'</div>';
 }
 
 function output7ColValPage2($hashMap, $label, 
@@ -128,7 +161,7 @@ html, body, article, aside, details, figcaption, figure, header, hgroup, menu, n
   margin: 0 0 3em 0;
   padding: 0;
 }
-.Rtable-cell, .Rtable-cell10, .Rtable-cell20, .Rtable-cell30, .Rtable-cell60 {
+.Rtable-cell, .Rtable-cell10, .Rtable-cell14, .Rtable-cell28, .Rtable-cell20, .Rtable-cell30, .Rtable-cell60 {
   text-align: center;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -151,6 +184,8 @@ html, body, article, aside, details, figcaption, figure, header, hgroup, menu, n
 .Rtable--4cols > .Rtable-cell10  { width: 10%; }
 .Rtable--4cols > .Rtable-cell20  { width: 20%; }
 .Rtable--4cols > .Rtable-cell30  { width: 30%; }
+.Rtable--4cols > .Rtable-cell14  { width: 14.285%; }
+.Rtable--4cols > .Rtable-cell28  { width: 28.57%; }
 .Rtable--5cols > .Rtable-cell  { width: 20%; }
 .Rtable--6cols > .Rtable-cell  { width: 16.6%; }
 .Rtable--7cols > .Rtable-cell  { width: 14.285%; }
@@ -177,18 +212,6 @@ html, body, article, aside, details, figcaption, figure, header, hgroup, menu, n
 XYZ;
 echo $style;
 
-$headUrl = "http://asp1.krx.co.kr/servlet/krx.asp.XMLSise?code=031980";
-$headXml = get_site_html($headUrl);
-$xmlstr = stripFirstLine($headXml);
-$headResult = new SimpleXMLElement($xmlstr);
-$hashMap = array();
-foreach($headResult->attributes() as $a => $b) {
-  $hashMap[$a]=''.$b.'';
-}
-buildMap($headResult->TBL_StockInfo->attributes(), $hashMap);
-buildMap($headResult->TBL_Hoga->attributes(), $hashMap);
-buildMap($headResult->stockInfo->attributes(), $hashMap);
-
 $url = "http://asp1.krx.co.kr/servlet/krx.asp.XMLJemu?code=031980";
 $xml = get_site_html($url);
 $xmlstr = stripFirstLine($xml);
@@ -196,6 +219,12 @@ $xmlstr = stripFirstLine($xml);
 $result = new SimpleXMLElement($xmlstr);
 ?>
 <?php
+
+// Get Query Time
+$hashMap = array();
+foreach($result->attributes() as $a => $b) {
+  $hashMap[$a]=''.$b.'';
+}
 
 $daeCha = array();
 buildMap($result->TBL_DaeCha->attributes(), $daeCha);
@@ -234,56 +263,21 @@ for ($i = 0; $i < 6; $i++) {
   buildMap($result->TBL_CashFlow->TBL_CashFlow_data[$i]->attributes(), $cashFlowDataMap[$i]);
 }
 
-//print_r($cashFlowDataMap);
-
-echo '<div class="Rtable Rtable--4cols">';
-echo '<div class="Rtable-cell value">현재가</div>';
-echo '<div class="Rtable-cell value"></div>';
-echo '<div class="Rtable-cell value">KOSPI</div>';
-echo '<div class="Rtable-cell value">KOSDAQ</div>';
-echo '<div class="Rtable-cell valueLarge">'.$hashMap["CurJuka"].'</div>';
-echo '<div class="Rtable-cell value">';
-echo '<div style="margin: 0px;" class="Rtable Rtable--2cols">';
-echo '<div class="Rtable-cell value">전일대비</div>';
-echo '<div class="Rtable-cell value">'.$hashMap["Debi"].'</div>';
-echo '<div class="Rtable-cell value">전일종가</div>';
-echo '<div class="Rtable-cell value">'.$hashMap["PrevJuka"].'</div>';
-echo '<div class="Rtable-cell value">거래량</div>';
-echo '<div class="Rtable-cell value">'.$hashMap["Volume"].'</div>';
-echo '</div>';
-echo '</div>';
-echo '<div class="Rtable-cell valueLarge">'.$hashMap["kospiJisu"].'</div>';
-echo '<div class="Rtable-cell valueLarge">'.$hashMap["kosdaqJisu"].'</div>';
-echo '<div class="Rtable-cell value"></div>';
-echo '<div class="Rtable-cell value"></div>';
-echo '<div class="Rtable-cell value">'.$hashMap["kospiDebi"].'</div>';
-echo '<div class="Rtable-cell value">'.$hashMap["kosdaqJisuDebi"].'</div>';
-echo '</div>';
-
+// Section 1
 echo '<div style="margin: 0px;" class="Rtable Rtable--2cols">';
 echo '<div style="text-align:left" class="Rtable-cell">대차대조표</div>';
 echo '<div style="text-align:right" class="Rtable-cell">'.$hashMap["querytime"].'</div>';
 echo '</div>';
 
-/*
 echo '<div class="Rtable Rtable--4cols border">';
 echo '<div class="Rtable-cell10 label border">재무항목</div>';
 echo '<div class="Rtable-cell30 label2 border">'.$daeCha["year0"].'/'.$daeCha["month0"].'</div>';
-echo '<div class="Rtable-cell30 label border">'.$daeCha["year1"].'/'.$daeCha["month1"].'</div>';
+echo '<div class="Rtable-cell30 label2 border">'.$daeCha["year1"].'/'.$daeCha["month1"].'</div>';
 echo '<div class="Rtable-cell30 label2 border">'.$daeCha["year2"].'/'.$daeCha["month2"].'</div>';
-echo '<div class="Rtable-cell10 label border">재무항목</div>';
-echo '<div class="Rtable-cell30 label2 border">';
-outputOneRowTitlePage2("금액","구성비","증감율");
-echo '</div>';
-echo '<div class="Rtable-cell30 label border">';
-outputOneRowTitlePage2("금액","구성비","증감율");
-echo '</div>';
-echo '<div class="Rtable-cell30 label2 border">';
-outputOneRowTitlePage2("금액","구성비","증감율");
-echo '</div>';
-*/
-
 echo '<div class="Rtable Rtable--10cols border">';
+outputOneRowTitlePage2("","금액","구성비","증감율"
+                      ,"금액","구성비","증감율"
+                      ,"금액","구성비","증감율");
 for ($i = 0; $i < 10; $i++) {
   outputOneRowValPage2($daeChaDataMap[$i], "hangMok".$i, 
     "year1Money".$i, "year1GuSungRate".$i, "year1JungGamRate".$i,
@@ -292,7 +286,17 @@ for ($i = 0; $i < 10; $i++) {
 }
 echo '</div>';
 
+// Section 2
+echo '<div style="text-align:left" class="Rtable-cell">손익계산서</div>';
+echo '<div class="Rtable Rtable--4cols border">';
+echo '<div class="Rtable-cell10 label border">재무항목</div>';
+echo '<div class="Rtable-cell30 label2 border">'.$sonIk["year0"].'/'.$sonIk["month0"].'</div>';
+echo '<div class="Rtable-cell30 label2 border">'.$sonIk["year1"].'/'.$sonIk["month1"].'</div>';
+echo '<div class="Rtable-cell30 label2 border">'.$sonIk["year2"].'/'.$sonIk["month2"].'</div>';
 echo '<div class="Rtable Rtable--10cols border">';
+outputOneRowTitlePage2("","금액","구성비","증감율"
+                      ,"금액","구성비","증감율"
+                      ,"금액","구성비","증감율");
 for ($i = 0; $i < 6; $i++) {
   outputOneRowValPage2($sonIkDataMap[$i], "hangMok".$i, 
     "year1Money".$i, "year1GuSungRate".$i, "year1JungGamRate".$i,
@@ -301,7 +305,15 @@ for ($i = 0; $i < 6; $i++) {
 }
 echo '</div>';
 
+// Section 3
+echo '<div style="text-align:left" class="Rtable-cell">현금흐름표</div>';
+echo '<div class="Rtable Rtable--4cols border">';
+echo '<div class="Rtable-cell14 label border">재무항목</div>';
+echo '<div class="Rtable-cell28 label2 border">'.$cashFlow["year0"].'/'.$cashFlow["month0"].'</div>';
+echo '<div class="Rtable-cell28 label2 border">'.$cashFlow["year1"].'/'.$cashFlow["month1"].'</div>';
+echo '<div class="Rtable-cell28 label2 border">'.$cashFlow["year2"].'/'.$cashFlow["month2"].'</div>';
 echo '<div class="Rtable Rtable--7cols border">';
+output7ColTitlePage2("","금액","증감액","금액","증감액","금액","증감액");
 for ($i = 0; $i < 6; $i++) {
   output7ColValPage2($cashFlowDataMap[$i], "hangMok".$i, 
     "year1Money".$i,  "year1JungGamRate".$i,

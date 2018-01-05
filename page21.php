@@ -158,7 +158,7 @@ html, body, article, aside, details, figcaption, figure, header, hgroup, menu, n
 .Rtable {
   display: flex;
   flex-wrap: wrap;
-  margin: 0 0 3em 0;
+  margin: 0 0 0 0;
   padding: 0;
 }
 .Rtable-cell, .Rtable-cell10, .Rtable-cell14, .Rtable-cell28, .Rtable-cell20, .Rtable-cell30, .Rtable-cell60 {
@@ -280,55 +280,4 @@ for ($i = 0; $i < 10; $i++) {
     "year3Money".$i, "year3GuSungRate".$i, "year3JungGamRate".$i );
 }
 echo '</div>';
-
-// Section 2
-echo '<div style="text-align:left" class="Rtable-cell">손익계산서</div>';
-echo '<div class="Rtable Rtable--4cols border">';
-echo '<div class="Rtable-cell10 label border">재무항목</div>';
-echo '<div class="Rtable-cell30 label2 border">'.$sonIk["year0"].'/'.$sonIk["month0"].'</div>';
-echo '<div class="Rtable-cell30 label2 border">'.$sonIk["year1"].'/'.$sonIk["month1"].'</div>';
-echo '<div class="Rtable-cell30 label2 border">'.$sonIk["year2"].'/'.$sonIk["month2"].'</div>';
-echo '<div class="Rtable Rtable--10cols border">';
-outputOneRowTitlePage2("","금액","구성비","증감율"
-                      ,"금액","구성비","증감율"
-                      ,"금액","구성비","증감율");
-for ($i = 0; $i < 6; $i++) {
-  outputOneRowValPage2($sonIkDataMap[$i], "hangMok".$i, 
-    "year1Money".$i, "year1GuSungRate".$i, "year1JungGamRate".$i,
-    "year1Money".$i, "year2GuSungRate".$i, "year2JungGamRate".$i,
-    "year3Money".$i, "year3GuSungRate".$i, "year3JungGamRate".$i );
-}
-echo '</div>';
-
-// Section 3
-echo '<div style="text-align:left" class="Rtable-cell">현금흐름표</div>';
-echo '<div class="Rtable Rtable--4cols border">';
-echo '<div class="Rtable-cell14 label border">재무항목</div>';
-echo '<div class="Rtable-cell28 label2 border">'.$cashFlow["year0"].'/'.$cashFlow["month0"].'</div>';
-echo '<div class="Rtable-cell28 label2 border">'.$cashFlow["year1"].'/'.$cashFlow["month1"].'</div>';
-echo '<div class="Rtable-cell28 label2 border">'.$cashFlow["year2"].'/'.$cashFlow["month2"].'</div>';
-echo '<div class="Rtable Rtable--7cols border">';
-output7ColTitlePage2("","금액","증감액","금액","증감액","금액","증감액");
-for ($i = 0; $i < 6; $i++) {
-  output7ColValPage2($cashFlowDataMap[$i], "hangMok".$i, 
-    "year1Money".$i,  "year1JungGamRate".$i,
-    "year1Money".$i,  "year2JungGamRate".$i,
-    "year3Money".$i,  "year3JungGamRate".$i );
-}
-echo '</div>';
-
-/*
-outputOneRowPage3($volMap[0],'distime','disTitle','submitOblgNm');
-outputOneRowPage3($volMap[1],'distime','disTitle','submitOblgNm');
-outputOneRowPage3($volMap[2],'distime','disTitle','submitOblgNm');
-outputOneRowPage3($volMap[3],'distime','disTitle','submitOblgNm');
-outputOneRowPage3($volMap[4],'distime','disTitle','submitOblgNm');
-outputOneRowPage3($volMap[5],'distime','disTitle','submitOblgNm');
-outputOneRowPage3($volMap[6],'distime','disTitle','submitOblgNm');
-outputOneRowPage3($volMap[7],'distime','disTitle','submitOblgNm');
-outputOneRowPage3($volMap[8],'distime','disTitle','submitOblgNm');
-outputOneRowPage3($volMap[9],'distime','disTitle','submitOblgNm');
-echo '</div>';
-*/
-
 ?>

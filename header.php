@@ -48,9 +48,9 @@ function getPreviousClosePrice($text)
 
 function getArrow($curJuka, $prevJuka  ) {
   if ($curJuka > $prevJuka) {
-    $arrow = '<span style="color:#0433FF;">&#x25B2;</span>';
+    $arrow = '<span style="color:#FF2600;">&#x25B2;</span>';
   } elseif ($curJuka < $prevJuka) {
-    $arrow = '<span style="color:#FF2600;">&#x25BC;</span>';
+    $arrow = '<span style="color:#0433FF;">&#x25BC;</span>';
   } else {
     $arrow = '';
   }
@@ -83,6 +83,24 @@ $style = <<<XYZ
 <style type='text/css'>
 html, body, article, aside, details, figcaption, figure, header, hgroup, menu, nav, section, header, table, tbody, tfoot, thead, tr, th, td, article, aside, audio, video
 {margin:0;height:100%;padding:0;border:0;outline:0;font-size:100%;font:inherit;font-family:'NanumSquare','나눔스퀘어','Nanum Square Light',Oswald,'Nanum Gothic';color:#555;vertical-align:middle;background:transparent;box-sizing:border-box;-o-box-sizing:border-box;-ms-box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box}
+
+@media only screen and (max-width: 736px) {
+
+.Rtable {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 2vw;
+  margin: 0 0 3em 0;
+  padding: 0;
+}
+.valueLarge {
+  color: #55555;
+  background-color: #FFFFFF;
+  font-size: 3vw;
+  padding-bottom: 5px;
+}
+
+}
 
 .Rtable {
   display: flex;
@@ -120,7 +138,7 @@ html, body, article, aside, details, figcaption, figure, header, hgroup, menu, n
 .valueLarge {
   color: #55555;
   background-color: #FFFFFF;
-  font-size: 300%;
+  font-size: 200%;
   padding-bottom: 5px;
 }
 .label {
@@ -184,16 +202,6 @@ for ($i = 0; $i < 5; $i++) {
   buildMap($result->TBL_AskPrice->AskPrice[$i]->attributes(), $volMap[$i]);
 }
 
-$curJuka = $hashMap["CurJuka"];
-$prevJuka = $hashMap["PrevJuka"];
-if ($curJuka > $prevJuka) {
-  $arrow = '<span style="color:#0433FF;">&#x25B2;</span>';
-} elseif ($curJuka < $prevJuka) {
-  $arrow = '<span style="color:#FF2600;">&#x25BC;</span>';
-} else {
-  $arrow = '';
-}
-
 echo '<div class="Rtable Rtable--4cols">';
 echo '<div class="Rtable-cell value">현재가</div>';
 echo '<div class="Rtable-cell value"></div>';
@@ -203,15 +211,15 @@ echo '<div class="Rtable-cell valueLarge">'.$hashMap["CurJuka"].'</div>';
 echo '<div class="Rtable-cell value">';
 echo '<div style="margin: 0px;" class="Rtable Rtable--2cols">';
 echo '<div class="Rtable-cell value">전일대비</div>';
-echo '<div class="Rtable-cell value">'.getArrow($hashMap["CurJuka"],$hashMap["PrevJuka"]).$hashMap["Debi"].'</div>';
+echo '<div class="Rtable-cell value">'.getArrow($hashMap["CurJuka"],$hashMap["PrevJuka"]).' '.$hashMap["Debi"].'</div>';
 echo '<div class="Rtable-cell value">전일종가</div>';
 echo '<div class="Rtable-cell value">'.$hashMap["PrevJuka"].'</div>';
 echo '<div class="Rtable-cell value">거래량</div>';
 echo '<div class="Rtable-cell value">'.$hashMap["Volume"].'</div>';
 echo '</div>';
 echo '</div>';
-echo '<div class="Rtable-cell" style="border-left: 6px solid #FF2600;"><span class="valueLarge">'.$hashMap["kospiJisu"].'</span><br><span class="value">'.getArrow($hashMap["kospiJisu"],$kospi).$hashMap["kospiDebi"].'</div>';
-echo '<div class="Rtable-cell"><span class="valueLarge">'.$hashMap["kosdaqJisu"].'</span><br><span class="value">'.getArrow($hashMap["kosdaqJisu"],$kosdaq).$hashMap["kosdaqJisuDebi"].'</div>';
+echo '<div class="Rtable-cell" style="border-left: 6px solid #FF2600;"><span class="valueLarge">'.$hashMap["kospiJisu"].'</span><br><span class="value">'.getArrow($hashMap["kospiJisu"],$kospi).' '.$hashMap["kospiDebi"].'</div>';
+echo '<div class="Rtable-cell"><span class="valueLarge">'.$hashMap["kosdaqJisu"].'</span><br><span class="value">'.getArrow($hashMap["kosdaqJisu"],$kosdaq).' '.$hashMap["kosdaqJisuDebi"].'</div>';
 echo '</div>';
 
 ?>

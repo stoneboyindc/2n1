@@ -95,11 +95,6 @@ html, body, article, aside, details, figcaption, figure, header, hgroup, menu, n
   color: #55555;
   background-color: #FFFFFF;
 }
-.valueLarge {
-  color: #55555;
-  background-color: #FFFFFF;
-  font-size: 300%;
-}
 .label {
   color: #FFFFFF;
   background-color: #000000;

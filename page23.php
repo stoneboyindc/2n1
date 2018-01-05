@@ -158,7 +158,7 @@ html, body, article, aside, details, figcaption, figure, header, hgroup, menu, n
 .Rtable {
   display: flex;
   flex-wrap: wrap;
-  margin: 0 0 3em 0;
+  margin: 0 0 0 0;
   padding: 0;
 }
 .Rtable-cell, .Rtable-cell10, .Rtable-cell14, .Rtable-cell28, .Rtable-cell20, .Rtable-cell30, .Rtable-cell60 {
@@ -257,49 +257,6 @@ for ($i = 0; $i < 6; $i++) {
   $cashFlowDataMap[$i] = array();
   buildMap($result->TBL_CashFlow->TBL_CashFlow_data[$i]->attributes(), $cashFlowDataMap[$i]);
 }
-
-// Section 1
-echo '<div style="margin: 0px;" class="Rtable Rtable--2cols">';
-echo '<div style="text-align:left" class="Rtable-cell">대차대조표</div>';
-echo '<div style="text-align:right" class="Rtable-cell">'.$hashMap["querytime"].'</div>';
-echo '</div>';
-
-echo '<div class="Rtable Rtable--4cols border">';
-echo '<div class="Rtable-cell10 label border">재무항목</div>';
-echo '<div class="Rtable-cell30 label2 border">'.$daeCha["year0"].'/'.$daeCha["month0"].'</div>';
-echo '<div class="Rtable-cell30 label2 border">'.$daeCha["year1"].'/'.$daeCha["month1"].'</div>';
-echo '<div class="Rtable-cell30 label2 border">'.$daeCha["year2"].'/'.$daeCha["month2"].'</div>';
-echo '<div class="Rtable Rtable--10cols border">';
-outputOneRowTitlePage2("","금액","구성비","증감율"
-                      ,"금액","구성비","증감율"
-                      ,"금액","구성비","증감율");
-for ($i = 0; $i < 10; $i++) {
-  outputOneRowValPage2($daeChaDataMap[$i], "hangMok".$i, 
-    "year1Money".$i, "year1GuSungRate".$i, "year1JungGamRate".$i,
-    "year1Money".$i, "year2GuSungRate".$i, "year2JungGamRate".$i,
-    "year3Money".$i, "year3GuSungRate".$i, "year3JungGamRate".$i );
-}
-echo '</div>';
-
-// Section 2
-echo '<div style="text-align:left" class="Rtable-cell">손익계산서</div>';
-echo '<div class="Rtable Rtable--4cols border">';
-echo '<div class="Rtable-cell10 label border">재무항목</div>';
-echo '<div class="Rtable-cell30 label2 border">'.$sonIk["year0"].'/'.$sonIk["month0"].'</div>';
-echo '<div class="Rtable-cell30 label2 border">'.$sonIk["year1"].'/'.$sonIk["month1"].'</div>';
-echo '<div class="Rtable-cell30 label2 border">'.$sonIk["year2"].'/'.$sonIk["month2"].'</div>';
-echo '<div class="Rtable Rtable--10cols border">';
-outputOneRowTitlePage2("","금액","구성비","증감율"
-                      ,"금액","구성비","증감율"
-                      ,"금액","구성비","증감율");
-for ($i = 0; $i < 6; $i++) {
-  outputOneRowValPage2($sonIkDataMap[$i], "hangMok".$i, 
-    "year1Money".$i, "year1GuSungRate".$i, "year1JungGamRate".$i,
-    "year1Money".$i, "year2GuSungRate".$i, "year2JungGamRate".$i,
-    "year3Money".$i, "year3GuSungRate".$i, "year3JungGamRate".$i );
-}
-echo '</div>';
-
 // Section 3
 echo '<div style="text-align:left" class="Rtable-cell">현금흐름표</div>';
 echo '<div class="Rtable Rtable--4cols border">';
@@ -316,19 +273,4 @@ for ($i = 0; $i < 6; $i++) {
     "year3Money".$i,  "year3JungGamRate".$i );
 }
 echo '</div>';
-
-/*
-outputOneRowPage3($volMap[0],'distime','disTitle','submitOblgNm');
-outputOneRowPage3($volMap[1],'distime','disTitle','submitOblgNm');
-outputOneRowPage3($volMap[2],'distime','disTitle','submitOblgNm');
-outputOneRowPage3($volMap[3],'distime','disTitle','submitOblgNm');
-outputOneRowPage3($volMap[4],'distime','disTitle','submitOblgNm');
-outputOneRowPage3($volMap[5],'distime','disTitle','submitOblgNm');
-outputOneRowPage3($volMap[6],'distime','disTitle','submitOblgNm');
-outputOneRowPage3($volMap[7],'distime','disTitle','submitOblgNm');
-outputOneRowPage3($volMap[8],'distime','disTitle','submitOblgNm');
-outputOneRowPage3($volMap[9],'distime','disTitle','submitOblgNm');
-echo '</div>';
-*/
-
 ?>
